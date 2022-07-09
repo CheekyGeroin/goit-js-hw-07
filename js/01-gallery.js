@@ -33,18 +33,23 @@ refs.list.addEventListener("click", onCreateBigImage);
 
 function onCreateBigImage(evt) {
   evt.preventDefault();
-  if (evt.target.classList.contains("gallery-items")) {
+  if (evt.target.classList.contains("gallery")) {
     return;
   }
   const instance = basicLightbox.create(
     `<img src="${evt.target.dataset.source}">`
   );
-  window.addEventListener("keydown", onEscKeyPress);
+  onShow(instance);
   instance.show();
   function onEscKeyPress(evt) {
     if (evt.code === "Escape") {
-      window.removeEventListener("keydown", onEscKeyPress);
       instance.close();
     }
+  }
+  function onShow(instance) {
+    window.addEventListener("keydown", onEscKeyPress);
+  }
+  function onCLose(instance) {
+    window.removeEventListener("keydown", onEscKeyPress);
   }
 }
