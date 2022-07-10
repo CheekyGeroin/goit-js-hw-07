@@ -37,19 +37,20 @@ function onCreateBigImage(evt) {
     return;
   }
   const instance = basicLightbox.create(
-    `<img src="${evt.target.dataset.source}">`
+    `<img src="${evt.target.dataset.source}">`,
+    {
+      onShow: (instance) => {
+        window.addEventListener("keydown", onEscKeyPress);
+      },
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onEscKeyPress);
+      },
+    }
   );
-  onShow(instance);
   instance.show();
   function onEscKeyPress(evt) {
     if (evt.code === "Escape") {
       instance.close();
     }
-  }
-  function onShow(instance) {
-    window.addEventListener("keydown", onEscKeyPress);
-  }
-  function onCLose(instance) {
-    window.removeEventListener("keydown", onEscKeyPress);
   }
 }
